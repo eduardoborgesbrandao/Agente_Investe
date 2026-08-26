@@ -2,8 +2,8 @@ name: Executar Agente de Investimentos
 
 on:
   schedule:
-    - cron: '30 8 * * *'
-  workflow_dispatch:     
+    - cron: '30 8 * * *' # Roda todos os dias às 05:30 (Horário de Brasília)
+  workflow_dispatch:
 
 jobs:
   build:
@@ -16,7 +16,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          cache: "pip"
 
       - name: Instalar dependências
         run: pip install requests yfinance feedparser google-genai python-dotenv beautifulsoup4
