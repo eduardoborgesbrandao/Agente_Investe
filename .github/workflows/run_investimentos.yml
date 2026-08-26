@@ -2,8 +2,8 @@ name: Executar Agente de Investimentos
 
 on:
   schedule:
-    - cron: '30 8 * * *' # Roda todos os dias às 05:30 (Horário de Brasília / UTC-3)
-  workflow_dispatch:     # Permite que você clique no botão para testar manualmente a qualquer momento
+    - cron: '30 8 * * *'
+  workflow_dispatch:     
 
 jobs:
   build:
