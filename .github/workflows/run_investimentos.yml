@@ -1,4 +1,14 @@
-steps:
+name: Executar Agente de Investimentos
+
+on:
+  schedule:
+    - cron: '30 8 * * *' # Roda todos os dias às 05:30 (Horário de Brasília / UTC-3)
+  workflow_dispatch:     # Permite que você clique no botão para testar manualmente a qualquer momento
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout
         uses: actions/checkout@v4
 
