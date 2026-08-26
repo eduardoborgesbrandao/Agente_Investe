@@ -1,0 +1,38 @@
+name: Agente de Investimentos
+
+on:
+  schedule:
+    # Roda às 09:00 horário de Brasília (12:00 UTC) nos dias úteis
+    - cron: '0 12 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      motivo:
+        description: "Execução manual"
+        required: false
+        default: "Teste"
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Instalar dependências
+        run: pip install requests yfinance feedparser google-generativeai python-dotenv beautifulsoup4
+
+      - name: Executar agente
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          SMTP_EMAIL:     ${{ secrets.SMTP_EMAIL }}
+          SMTP_PASSWORD:  ${{ secrets.SMTP_PASSWORD }}
+          DEST_EMAIL:     ${{ secrets.DEST_EMAIL }}
+          BRAPI_TOKEN:    ${{7ViSAsjD8acvLf9a8fPeAW}}
+        run: python agente_investimentos.py
