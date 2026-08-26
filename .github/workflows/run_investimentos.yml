@@ -1,21 +1,4 @@
-name: Agente de Investimentos
-
-on:
-  schedule:
-    # Roda às 09:00 horário de Brasília (12:00 UTC) nos dias úteis
-    - cron: '0 12 * * 1-5'
-  workflow_dispatch:
-    inputs:
-      motivo:
-        description: "Execução manual"
-        required: false
-        default: "Teste"
-
-jobs:
-  run-agent:
-    runs-on: ubuntu-latest
-
-    steps:
+steps:
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -26,7 +9,15 @@ jobs:
           cache: "pip"
 
       - name: Instalar dependências
-        run: pip install requests yfinance feedparser google-generativeai python-dotenv beautifulsoup4
+        run: pip install requests yfinance feedparser google-genai python-dotenv beautifulsoup4
+
+      - name: Preparar arquivos ocultos
+        env:
+          CARTEIRA_JSON: ${{ secrets.CARTEIRA_JSON }}
+          PROMPT_TXT: ${{ secrets.PROMPT_TXT }}
+        run: |
+          echo "$CARTEIRA_JSON" > carteira.json
+          echo "$PROMPT_TXT" > prompt.txt
 
       - name: Executar agente
         env:
@@ -34,5 +25,4 @@ jobs:
           SMTP_EMAIL:     ${{ secrets.SMTP_EMAIL }}
           SMTP_PASSWORD:  ${{ secrets.SMTP_PASSWORD }}
           DEST_EMAIL:     ${{ secrets.DEST_EMAIL }}
-          BRAPI_TOKEN:    ${{7ViSAsjD8acvLf9a8fPeAW}}
         run: python agente_investimentos.py
