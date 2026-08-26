@@ -1,3 +1,4 @@
 .env
 __pycache__/
 carteira.json
+prompt.txt
